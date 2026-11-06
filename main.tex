@@ -1,0 +1,594 @@
+\pdfminorversion=7
+\documentclass[12pt,a4paper]{article}
+
+% --- Sprache und Zeichenkodierung ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+
+% --- Schaltungen ---
+\usepackage[european,straightvoltages]{circuitikz}
+
+% --- Schriftart (Klassischer wissenschaftlicher LaTeX-Look: Latin Modern) ---
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% --- Seitenränder (gemäß DHBW-Vorgaben) ---
+\usepackage[left=2.5cm,right=2.5cm,top=3.0cm,bottom=2.5cm,headheight=36pt]{geometry}
+
+% --- Zeilenabstand und Absatzformatierung ---
+\usepackage{setspace}
+\onehalfspacing             % 1,5-facher Zeilenabstand
+\setlength{\parindent}{0pt}  % Kein Einzug bei neuen Absätzen
+\setlength{\parskip}{6pt}   % Fester Abstand zwischen Absätzen
+
+% --- Kopf- und Fußzeilen ---
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+
+\pagestyle{fancy}
+\fancyhf{} % Vorherige Header/Footer leeren
+
+% Kopfzeile: Mitte Titel, Rechts DHBW-Logo
+% \fancyhead[C]{\small Studienarbeit 1}
+\fancyhead[R]{%
+    \IfFileExists{img/DHBW-Logo.pdf}{%
+        \includegraphics[height=1.1cm]{img/DHBW-Logo}%
+    }{%
+        \textbf{\color{red!80!black}DHBW}\\\tiny Duale Hochschule\\Baden-Württemberg%
+    }%
+}
+
+% Fußzeile: Seitenzahl unten rechts
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt} % Keine störende Linie unter den Logos
+
+% --- Tabellen, Bilder und Formeln ---
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% --- Hyperlinks und PDF-Metadaten ---
+\usepackage[hidelinks,plainpages=false,pdfpagelabels]{hyperref}
+
+% --- Literaturverzeichnis (BibLaTeX / Biber) ---
+\usepackage[backend=biber,style=numeric,sorting=none]{biblatex}
+\addbibresource{literatur.bib}
+
+% ==============================================================================
+% DOKUMENTENBEGINN
+% ==============================================================================
+\begin{document}
+\pagenumbering{alph}
+
+% ------------------------------------------------------------------------------
+% DECKBLATT (Keine Seitenzahl)
+% ------------------------------------------------------------------------------
+\begin{titlepage}
+    \thispagestyle{fancy} % Header mit Logos auch auf dem Deckblatt anzeigen
+    
+    \vspace*{2.0cm}
+    
+    \begin{center}
+        {\large \textbf{Studienarbeit 1}} \\[2.5cm]
+        
+        {\Large \textbf{USB-Powerbank für Dynamoladung}}\\[2.5cm]
+        
+        des Studiengangs Elektro- und Informationstechnik \\[0.2cm]
+        an der Dualen Hochschule Baden-Württemberg Karlsruhe \\[2.0cm]
+        
+        von \\[0.5cm]
+        {\large \textbf{Loris De Marco}} \\[1.5cm]
+        
+        Abgabedatum: 10.12.2026
+    \end{center}
+    
+    \vfill
+    
+    % Metadaten-Tabelle am unteren Rand
+    \begin{table}[b]
+        \renewcommand{\arraystretch}{1.2}
+        \begin{tabular}{@{}p{7.5cm}p{7.5cm}@{}}
+            \textbf{Semester} & 5 \\
+            \textbf{Bearbeitungszeitraum} & 22.09.2026 bis 10.12.2026 \\
+            \textbf{Kurs und Matrikelnummer} & TEI24B1 / 9553410 \\
+            \textbf{Betreuer der DHBW} & Joachim Manz \\
+        \end{tabular}
+    \end{table}
+\end{titlepage}
+
+% ------------------------------------------------------------------------------
+% VORSPANN: Römische Nummerierung
+% ------------------------------------------------------------------------------
+\newpage
+\pagenumbering{Roman}
+\setcounter{page}{1}
+
+% --- Eidesstattliche Erklärung, Sperrvermerk, Gender-Hinweis ---
+\section*{Eidesstattliche Erklärung}
+Ich versichere hiermit, dass ich die vorliegende Arbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel verwendet habe und diese Arbeit bei keiner anderen Prüfung mit gleichem oder vergleichbarem Inhalt vorgelegt habe und diese bislang nicht veröffentlicht wurde. Des Weiteren versichere ich, dass die eingereichte elektronische Fassung mit der gedruckten Ausfertigung übereinstimmt.
+
+\vspace{1.5cm}
+\begin{tabular}{@{}p{3.5cm}p{4.0cm}p{5.5cm}@{}}
+    Ubstadt-Weiher & 10.12.2026 & \\ \cline{1-1} \cline{2-2} \cline{3-3}
+    Ort & Datum & Unterschrift
+\end{tabular}
+
+\vspace{2.0cm}
+
+% --- Zusammenfassung & Abstract ---
+\newpage
+\section*{Zusammenfassung}
+Deutsche Zusammenfassung 
+
+\newpage
+\section*{Abstract}
+Englischer Abstract
+
+% --- Verzeichnisse ---
+\newpage
+\tableofcontents
+
+\newpage
+\listoffigures
+
+\newpage
+\listoftables
+
+% ------------------------------------------------------------------------------
+% HAUPTTEIL: Arabische Nummerierung ab Kapitel 1
+% ------------------------------------------------------------------------------
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\section{Problemstellung und Ziel}
+Die begrenzte Akkulaufzeit eines Smartphones während der Navigation stellt bei mehrstündigen
+Fahrradfahrten insbesondere dann ein Problem dar, wenn keine Lademöglichkeit besteht. 
+Dieses Problem lässt sich zwar mit herkömmlichen USB-Powerbanks lösen, jedoch muss an das 
+Mitführen einer solchen USB-Powerbank vor jedem Fahrtantritt gedacht werden - im Zweifel 
+ist unmittelbar vor dem Fahrtantritt festzustellen, dass die Powerbank entladen ist.
+
+
+Nicht selten kommen Fahrräder mit einem Dynamo daher, welcher einen Teil der Bewegungsenergie
+in elektrische Energie umwandelt. Im Rahmen dieser Studienarbeit wird nach einer Möglichkeit gesucht,  
+ein Fahrrad-Dynamo zur Ladung eines Smartphones während der Fahrt zu nutzen.
+
+Das Ziel ist ein funktionsfähiger Prototyp, welcher die elektronischen Anforderungen erfüllt, sowie
+ein praktikabler Ansatz für die Unterbringung der Elektronik. 
+
+\section{Anforderungsanalyse} 
+\label{sec:anforderungsanalyse}
+Um den Entwicklungsprozess strukturiert und zielgerichtet zu gestalten, müssen zunächst die Anforderungen an das 
+Gesamtsystem definiert werden. Die Herausforderung besteht darin, ein Bindeglied zwischen zwei vollkommen 
+gegensätzlichen Systemwelten zu schaffen: Auf der einen Seite steht der Fahrrad-Dynamo als unregelmäßige, 
+mechanisch angetriebene Energiequelle, deren Abgabe stark von der Fahrweise abhängt. Auf der anderen Seite 
+steht das Smartphone als Verbraucher, der für einen stabilen Ladevorgang eine normierte und 
+unterbrechungsfreie Gleichspannung erfordert. Um sich der Lösung methodisch anzunähern, wird das 
+Gesamtsystem in drei funktionale Kernbereiche sowie die umgebungsbedingten Rahmenbedingungen unterteilt:
+\begin{enumerate}
+    \item \textbf{Energiebereitstellung und Dynamoseite:} Erfassung der mechanisch erzeugten elektrischen Leistung.
+    \item \textbf{Energiespeicherung und Pufferung:} Entkopplung von Erzeugung und Verbrauch.
+    \item \textbf{Energieabgabe und Verbraucherseite:} Bereitstellung einer normgerechten Ladeschnittstelle.
+    \item \textbf{Betriebs- und Umgebungssicherheit:} Mechanische Robustheit und Systemzuverlässigkeit im mobilen Außeneinsatz.
+\end{enumerate}
+
+\subsection{Energiebereitstellung und Dynamoseite}
+Das System soll vollständig autark arbeiten und die benötigte Energie ausschließlich aus der Fahrbewegung beziehen. 
+Aus Nutzersicht ergeben sich daraus folgende grundlegende Forderungen an den Eingang:
+\begin{itemize}
+    \item \textbf{Wandlung von Wechselenergie:} 
+    Da Fahrraddynamos Wechselstrom liefern, muss das System diesen gleichrichten 
+    und für nachfolgende Stufen nutzbar machen.
+    \item \textbf{Dynamische Betriebsbedingungen:} 
+    Die Schaltung muss mit den unterschiedlichen Fahrzuständen umgehen können. Sie muss so konzipiert sein, 
+    dass bereits bei moderater Alltagsgeschwindigkeit Energie gewonnen werden kann, während bei schnellen 
+    Abfahrten weder die Schaltung noch das Endgerät durch die unweigerlich ansteigende Generatorspannung beschädigt werden dürfen.
+    \item \textbf{Einfache Nachrüstbarkeit:} 
+    Die Anbindung an den Dynamo soll unkompliziert und ohne tiefgreifende Eingriffe in die bestehende Fahrradverkabelung möglich sein.
+\end{itemize}
+
+\subsection{Energiespeicherung und Pufferung}
+Eine direkte Kopplung zwischen Dynamo und Smartphone scheitert in der Praxis an zwei wesentlichen Faktoren: 
+Zum einen bricht die Versorgung bei jedem Halt (z.\,B. verkehrsbedingte Ampelstopps) sofort ab, was zu ständigen 
+Ladeunterbrechungen führt. Zum anderen übersteigt der Leistungsbedarf gängiger Schnellladeverfahren die Dauerleistung typischer Fahrradgeneratoren.
+Daraus leitet sich die Kernfunktion des Systems ab:
+\begin{itemize}
+    \item \textbf{Pufferfunktion bei Stillstand:} 
+    Um den Ladevorgang des Smartphones nicht abreißen zu lassen, ist ein elektrischer Zwischenspeicher 
+    erforderlich, der Standzeiten und Langsamfahrten nahtlos überbrückt.
+    \item \textbf{Leistungsüberhöhung:} 
+    Überschüssige Energie bei Fahrten ohne angeschlossenen Verbraucher (Smartphone im Ladevorgang) soll im Speicher gesammelt werden. 
+    Dies ermöglicht es, das Endgerät zu einem späteren Zeitpunkt mit einer deutlich höheren Leistung zu laden, 
+    als der Dynamo im selben Moment liefern kann.
+    \item \textbf{Batteriemanagement und Sicherheit:} 
+    Die Speichereinheit muss durch eine automatische Schutzlogik vor kritischen Betriebszuständen wie Überladung, 
+    Tiefentladung oder Überlastung geschützt werden.
+\end{itemize}
+
+\subsection{Energieabgabe und Verbraucherseite}
+Auf der Ausgangsseite steht die Praxistauglichkeit für den Endanwender im Vordergrund:
+\begin{itemize}
+    \item \textbf{Standardisierte Schnittstelle:} 
+    Der Anschluss des Smartphones muss über einen weit verbreiteten, modernen Standard 
+    (USB-C) erfolgen, um zusätzliche Adapter zu vermeiden.
+    \item \textbf{Stabile Spannungsversorgung:} 
+    Die Schnittstelle muss eine konstante, normgerechte Gleichspannung bereitstellen, die unabhängig von 
+    Fahrgeschwindigkeit oder Akkuladezustand innerhalb der engen Toleranzen der USB-Spezifikation bleibt.
+    \item \textbf{Praxisgerechte Ladeleistung:} 
+    Die Ladeleistung muss so dimensioniert sein, dass sie nicht nur den Eigenverbrauch des Smartphones bei 
+    aktiver Navigation kompensiert, sondern auch unter realen Nutzungsbedingungen einen spürbaren Ladefortschritt erzielt.
+\end{itemize}
+
+\subsection{Betriebssicherheit und Umweltanforderungen}
+Das System wird den üblichen Umwelteinflüssen während einer Fahrradfahrt ausgesetzt sein. Im wesentlichen ergeben sich die folgenden Anforderungen:
+\begin{itemize}
+    \item \textbf{Witterungsschutz:} 
+    Das Gesamtsystem muss gegen Umwelteinflüsse wie Regen, Spritzwasser und dam Eindringen von Schmutz geschützt sein.
+    \item \textbf{Vibrations- und Schockfestigkeit:}
+    Das System muss den üblichen mechanischen Belastungen einer Fahrradfahrt standhalten. Insbesondere dürfen die 
+    Vibrationen durch das Fahren auf unebenen Fahrbahnen keine Schäden an der Elektronik sowie Instabilität der elektrischen 
+    Kontakte (Wackelkontakte) verursachen.
+    \item \textbf{Kompakte Bauform:} 
+    Auf eine möglichst kompakte Bauform der Elektronik ist Wert zu legen, denn dadurch ergeben sich vielseitige Möglichkeiten der Unterbringung. 
+    Beispielsweise am Fahrradrahmen oder an einer Getränkehalterung. 
+\end{itemize}
+Der Mittelpunkt dieser Arbeit stellt die Elektronik dar, weshalb die Mechanik eine untergeordnete Rolle spielt. 
+Demnach ist eine vollständige Ausarbeitung der Mechanik nicht das Ziel, vielmehr genügt ein durchdachter Ansatz.
+
+
+\subsection{Strukturierte Anforderungsübersicht}
+Aus den abgeleiteten Kriterien ergibt sich das in \autoref{tab:lastenheft} dargestellte funktionale Anforderungsprofil, 
+welches als Bewertungsmaßstab für den späteren Schaltungsentwurf dient.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Übersicht Anforderungsprofil des Gesamtsystems}
+    \label{tab:lastenheft}
+    \begin{tabularx}{\textwidth}{p{3.0cm}p{4.2cm}X}
+        \toprule
+        \textbf{Kategorie} & \textbf{Kriterium} & \textbf{Ziel / Funktion} \\
+        \midrule
+        \textbf{Energiequelle} & Autarkie & Ausschließliche Speisung durch Fahrbewegung \\
+        & Variable Dynamik & Funktion von Anfahren bis schneller Abfahrt \\
+        & Überspannungsschutz & Eigensicherheit der Elektronik bei hohen Drehzahlen \\
+        \midrule
+        \textbf{Speicher} & Standzeitüberbrückung & Erhalt des Ladevorgangs bei Fahrstopps \\
+        & Pufferung & Speicherung zur Ermöglichung höherer Laderaten \\
+        & Zellensicherheit & Schutz vor Überladung, Tiefentladung und Kurzschluss \\
+        \midrule
+        \textbf{Ausgang} & Standardisierung & Universelle USB-C-Schnittstelle \\
+        & Spannungsstabilität & Normgerechte Spannungskonstanz für Endgeräte \\
+        & Ladefortschritt & Ausreichende Leistung bei aktiver Navigation \\
+        \midrule
+        \textbf{Betrieb} & Witterungsschutz & Schutz gegen Spritzwasser und Schmutz \\
+        & Mechanische Robustheit & Unempfindlich gegen fahrbahnbedingte Vibrationen \\
+        & Kompaktheit & Praktikable Montage an Rahmen oder Halterung \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+
+
+\section{Arten und Funktionsweise von Fahrraddynamos}
+\label{sec:dynamos}
+
+Zur fundierten Auslegung der elektronischen Wandler- und Ladestufen ist eine detaillierte Analyse der Eigenschaften 
+des eingesetzten Generators zwingend erforderlich. Obwohl im alltäglichen Sprachgebrauch die Bezeichnung „Dynamo``
+üblich ist, handelt es sich bei modernen Fahrradlichtmaschinen nicht um Gleichstromgeneratoren, sondern ausnahmslos 
+um permanenterregte Wechselstromgeneratoren.
+
+\subsection{Vergleich gängiger Bauformen}
+Historisch und marktbezogen wird im Wesentlichen zwischen zwei Konstruktionsprinzipien unterschieden: 
+dem Seitenläufer- bzw. Felgendynamo und dem getriebelosen Nabendynamo~\cite{schmidt2006}.
+
+\subsubsection{Seitenläufer- und Felgendynamos}
+Klassische Seitendynamos sind an der Fahrradgabel oder den Hinterbaustreben montiert. Die mechanische Drehmomentübertragung erfolgt 
+kraftschlüssig über ein kleines Reibrad, welches durch eine Federvorspannung an die Flanke des Reifens oder der Felge gepresst wird. 
+\begin{itemize}
+    \item \textbf{Witterungsabhängiger Schlupf:} 
+    Da die Kraftübertragung rein auf Reibung basiert, führen Nässe, Schnee oder Schmutz im Extremfall zu einem vollkommenen Einbruch 
+    des Reibbeiwerts, wodurch die elektrische Energieerzeugung gänzlich ausfällt.
+    \item \textbf{Geringer Wirkungsgrad:} 
+    Durch das hohe Übersetzungsverhältnis (kleiner Reibraddurchmesser auf großen Raddurchmesser), Reibungsverluste und die Walkarbeit 
+    am Reifenreifen liegt der Gesamtwirkungsgrad häufig lediglich zwischen $20\,\%$ und $35\,\%$.
+    \item \textbf{Verschleiß und Geräusche:} 
+    Der dauerhafte Kontakt führt zu sichtbarem Abrieb an der Reifenflanke und erzeugt Laufgeräusche.
+\end{itemize}
+
+\subsubsection{Nabendynamos und Begründung der Modellauswahl}
+Nabendynamos stellen heute den industriellen Standard für zuverlässige Fahrradbeleuchtung dar. Der Generator ist als 
+getriebeloser Innen- oder Außenläufer direkt in die Vorderradnabe integriert.
+\begin{itemize}
+    \item \textbf{Form- und schlupffreier Direktantrieb:} 
+    Die Rotation des Laufrades wird 1:1 ohne zwischengeschaltetes Getriebe auf den Rotor übertragen. 
+    Die Stromerzeugung arbeitet vollkommen wetterunabhängig und schlupffrei.
+    \item \textbf{Hoher Systemwirkungsgrad:} 
+    Durch den Wegfall mechanischer Reibräder erreichen getriebelose Nabendynamos unter Last Wirkungsgrade von über $50\,\%$ bis $65\,\%$.
+    \item \textbf{Robuste Kapselung:} 
+    Das Gesamtsystem ist innerhalb des Nabenkörpers über entsprechende Dichtungen vor dem Eindringen con Flüssigkeiten und Schmutz geschützt. 
+\end{itemize}
+Aus diesen Gründen wird für die Realisierung einer praxistauglichen und ganzjährig verlässlichen Ladelösung ausschließlich ein Nabendynamo 
+in Betracht gezogen. Gegenstand praktischer Untersuchungen im Rahmen dieser Arbeit ist das Modell DH-T4050-1D des Hertellers Shimano mit den elektrischen
+Parameterm  $6\,\text{V} \,/\, 1{,}5\,\text{W}$.
+
+\subsection{Aufbau und physikalisches Wirkprinzip}
+Der Nabendynamo arbeitet nach dem Prinzip des permanenterregten einphasigen Synchrongenerators in Klauenpolbauweise (Lundell-Polstruktur)~\cite{schmidt2006}. 
+
+Der Rotor besteht aus einem zylindrischen Dauermagnetring mit einer Vielzahl abwechselnder magnetischer Nord- und Südpole. Beim untersuchten Shimano-Modell beträgt die Polpaarzahl $p = 14$, woraus $2p = 28$ magnetische Pole resultieren. Der innenliegende Stator trägt eine einzige, konzentrisch um die Achse gewickelte Ringspule aus Kupferlackdraht. Diese Spule wird von zwei weichmagnetischen Blechkörben umschlossen, deren klauenförmige Finger abwechselnd ineinandergreifen.
+
+Dreht sich das Laufrad, so wandern die Magnetpole des Rotors an den Statorfingerklauen vorbei. Das Magnetfeld wird abwechselnd in positiver und negativer Richtung durch den Kern der Ringspule geleitet. Gemäß dem Faradayschen Induktionsgesetz wird in der Spule eine Quellwechselspannung $u_q(t)$ erzeugt:
+\begin{equation}
+    u_q(t) = -N \cdot \frac{\mathrm{d}\Phi(t)}{\mathrm{d}t}
+    \label{eq:faraday}
+\end{equation}
+wobei $N$ die Windungszahl der Statorspule und $\Phi(t)$ den magnetischen Fluss durch den Eisenkern beschreibt.
+
+\subsubsection{Frequenz- und Drehzahlbeziehung}
+Aufgrund des getriebelosen Direktantriebs steht die Frequenz $f$ der induzierten Wechselspannung in einem festen proportionalen Verhältnis zur Raddrehzahl $n_{\text{Rad}}$ und damit zur Fahrgeschwindigkeit $v$. Für ein gängiges 28-Zoll-Trekkingrad mit einem Reifenumfang von $U_{\text{Rad}} \approx 2{,}18\,\text{m}$ berechnet sich die elektrische Frequenz zu:
+\begin{equation}
+    f = p \cdot n_{\text{Rad}} = p \cdot \frac{v / 3{,}6}{U_{\text{Rad}}} = 14 \cdot \frac{v / 3{,}6}{2{,}18\,\text{m}} \approx 1{,}784 \cdot v \quad [\text{mit } v \text{ in km/h}]
+    \label{eq:frequenz_herleitung}
+\end{equation}
+Bei Schrittgeschwindigkeit ($10\,\text{km/h}$) liegt die Generatorfrequenz somit bei rund $17{,}8\,\text{Hz}$, während sie bei $20\,\text{km/h}$ ca. $35{,}7\,\text{Hz}$ und bei schnellen Abfahrten ($40\,\text{km/h}$) rund $71{,}4\,\text{Hz}$ beträgt.
+
+\subsubsection{Leerlaufverhalten und Quellspannung}
+Die Amplitude der induzierten Quellspannung $\hat{u}_q$ wächst proportional mit der zeitlichen Flussänderung $\mathrm{d}\Phi/\mathrm{d}t$ und damit streng linear mit der Winkelgeschwindigkeit $\omega$:
+\begin{equation}
+    \hat{u}_q(v) = \sqrt{2} \cdot k_v \cdot v
+    \label{eq:uq_linear}
+\end{equation}
+Hierbei definiert $k_v$ die generatorspezifische Spannungskonstante in $\text{V}_{\text{RMS}} / (\text{km/h})$. Im Leerlauf (keine Last am Ausgang angeschlossen) steigt die Spannung unbegrenzt mit der Geschwindigkeit an. Bei $v = 40\,\text{km/h}$ kann die Leerlaufspannung Spitzenwerte von über $45\text{--}50\,\text{V}$ erreichen.
+
+\subsection{Herleitung des elektrischen Ersatzschaltbildes}
+Um das Betriebs- und Klemmenverhalten analytisch zu modellieren, wird das klassische Ersatzschaltbild nach Wullkopf~\cite{wullkopf1959} herangezogen, welches auch Schmidt~\cite{schmidt2006} detailliert beschreibt.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{circuitikz}[scale=1.1, transform shape]
+        % Generatorzweig
+        \draw (0,0)
+            to[sV, v<=$u_q(t)$] (0,2)
+            to[R, l=$R_i$] (2.5,2)
+            to[L, l=$L_s$] (5,2)
+            to[short, i>=$i(t)$] (6,2)
+            to[short, -o] (6.5,2) node[above] {$+$};
+        
+        % Rückleitung
+        \draw (0,0)
+            to[short, -o] (6.5,0) node[below] {$-$};
+            
+        % Klemmenspannung
+        \draw (6.5,2) to[open, v=$u(t)$] (6.5,0);
+        
+        % Umrandung
+        \draw[dashed, gray!70] (-0.8,-0.5) rectangle (5.5,2.8);
+        \node[gray!90, above right] at (-0.8,2.8) {\footnotesize Klauenpol-Nabendynamo};
+    \end{circuitikz}
+    \caption{Lineares Wechselstrom-Ersatzschaltbild des Klauenpol-Nabendynamos}
+    \label{fig:dynamo_esb}
+\end{figure}
+
+Das Ersatzschaltbild (\autoref{fig:dynamo_esb}) modelliert den Generator durch:
+\begin{itemize}
+    \item die ideale, frequenzproportionale Spannungsquelle $u_q(t) = \hat{u}_q \cdot \sin(\omega t)$,
+    \item den ohmschen Wicklungswiderstand $R_i$ der Kupferspule,
+    \item die synchrone Induktivität $L_s$ (auch als effektive Generatorinduktivität $L_{\text{eff}}$ bezeichnet).
+\end{itemize}
+
+Die komplexe Innenimpedanz $\underline{Z}_i$ der Maschine lautet:
+\begin{equation}
+    \underline{Z}_i = R_i + \mathrm{j}\omega L_s = R_i + \mathrm{j} 2\pi f L_s
+    \label{eq:zi_komplex}
+\end{equation}
+
+\subsubsection{Inhärente Strombegrenzung durch die Inneninduktivität}
+Aus der Schaltung lässt sich eine fundamentale Eigenschaft von Fahrradlichtmaschinen ableiten: Unter Nenn- und Überlast verhält sich der Dynamo nicht wie eine Spannungsquelle, sondern wie eine \textbf{Konstantstromquelle}~\cite{schmidt2006}. 
+
+Betrachtet man den Kurzschlussfall ($R_L = 0\,\Omega$), so bestimmt sich der Kurzschlussstrom $\underline{I}_k$ zu:
+\begin{equation}
+    \underline{I}_k = \frac{\underline{U}_q}{\underline{Z}_i} = \frac{\underline{U}_q}{R_i + \mathrm{j}\omega L_s}
+\end{equation}
+Da bereits ab geringen Fahrgeschwindigkeiten ($v > 10\,\text{km/h}$) der induktive Blindwiderstand den ohmschen Anteil dominiert ($\omega L_s \gg R_i$) und gleichzeitig die Quellspannung linear mit der Kreisfrequenz wächst ($\hat{u}_q = c \cdot \omega$), ergibt sich für den Betrag des Kurzschlussstroms:
+\begin{equation}
+    I_k \approx \frac{c \cdot \omega}{\omega L_s} = \frac{c}{L_s} \approx \text{konstant}
+    \label{eq:konstantstrom}
+\end{equation}
+Die innere Induktivität $L_s$ wirkt somit als verlustloser, frequenzproportionaler Vorwiderstand, der den Entnahmestrom physikalisch auf ca. $500\text{--}550\,\text{mA}$ deckelt. Während diese Eigenschaft bei Glühbirnen das Durchbrennen bei Schnellfahrt verhinderte, drosselt sie an einer modernen Ladeschaltung die maximal entnehmbare Wirkleistung.
+
+\subsection{Messtechnische Parameterbestimmung des Shimano DH-T4050-1D}
+\label{subsec:messung}
+Für eine präzise Dimensionierung der Lade- und Kompensationskomponenten wurden die Kenngrößen des Shimano DH-T4050-1D experimentell im Labor bestimmt.
+
+\subsubsection{Messung des Wicklungswiderstands (R\_i)}
+Aufgrund des niedrigen Widerstands im einstelligen Ohm-Bereich wurde eine Vierleiter-Kelvin-Messung im Stillstand durchgeführt. Übergangswiderstände an den Klemmen und Zuleitungseinflüsse wurden dadurch eliminiert. Es ergab sich ein rein ohmscher Wicklungswiderstand von:
+\begin{equation}
+    R_i = 3{,}25\,\Omega
+\end{equation}
+
+\subsubsection{Leerlaufversuch (Spannungskonstante k\_v)}
+Der Dynamo wurde über einen Prüfstand bei variabler Drehzahl angetrieben und die Ausgangsspannung hochohmig ohne Last ($R_L \to \infty$) mit einem Oszilloskop und einem Echteffektivwert-Multimeter erfasst. 
+
+Die Auswertung der Messreihe ergab einen streng linearen Anstieg mit der Spannungskonstante:
+\begin{equation}
+    k_v = 0{,}602\,\frac{\text{V}_{\text{RMS}}}{\text{km/h}} \quad \Rightarrow \quad \hat{u}_q(v) = \sqrt{2} \cdot 0{,}602 \cdot v \approx 0{,}851 \cdot v
+\end{equation}
+Bei der Referenz-Reisegeschwindigkeit von $v = 20\,\text{km/h}$ liefert der Generator eine Leerlaufspannung von $U_{q,\text{RMS}} = 12{,}04\,\text{V}$ bzw. eine Spitzenspannung von $\hat{u}_q \approx 17{,}03\,\text{V}$.
+
+\subsubsection{Kurzschlussversuch (Synchrone Induktivität L\_s)}
+Zur experimentellen Ermittlung von $L_s$ wurde der Generator über einen induktionsarmen Vierleiter-Messshunt ($R_{\text{Shunt}} = 0{,}30\,\Omega$) kurzgeschlossen. Bei einer Fahrgeschwindigkeit von $v = 20\,\text{km/h}$ ($f = 35{,}7\,\text{Hz}$) wurde ein stabiler Kurzschlussstrom von:
+\begin{equation}
+    I_k = 550\,\text{mA}
+\end{equation}
+gemessen. Über den Betrag der Gesamtimpedanz im Kurzschlusskreis
+\begin{equation}
+    |\underline{Z}_{\text{ges}}| = \frac{U_{q,\text{RMS}}}{I_k} = \sqrt{(R_i + R_{\text{Shunt}})^2 + (2\pi f L_s)^2}
+\end{equation}
+lässt sich die synchrone Induktivität $L_s$ durch Umstellen analytisch berechnen:
+\begin{equation}
+    L_s = \frac{\sqrt{\left(\frac{U_{q,\text{RMS}}}{I_k}\right)^2 - (R_i + R_{\text{Shunt}})^2}}{2\pi f} = \frac{\sqrt{\left(\frac{12{,}04\,\text{V}}{0{,}550\,\text{A}}\right)^2 - (3{,}25\,\Omega + 0{,}30\,\Omega)^2}}{2\pi \cdot 35{,}7\,\text{Hz}} = 116{,}6\,\text{mH}
+\end{equation}
+
+In \autoref{tab:dynamo_parameter} sind die ermittelten Modellparameter des Shimano-Nabendynamos zusammengefasst.
+
+\begin{table}[H]
+    \centering
+    \caption{Experimentell bestimmte Modellparameter des Shimano DH-T4050-1D}
+    \label{tab:dynamo_parameter}
+    \begin{tabular}{llrl}
+        \toprule
+        \textbf{Parameter} & \textbf{Formelzeichen} & \textbf{Messwert} & \textbf{Einheit} \\
+        \midrule
+        Polpaarzahl & $p$ & $14$ & -- \\
+        Wicklungswiderstand & $R_i$ & $3{,}25$ & $\Omega$ \\
+        Synchrone Induktivität & $L_s$ & $116{,}6$ & $\text{mH}$ \\
+        Spannungskonstante & $k_v$ & $0{,}602$ & $\text{V}_{\text{RMS}} / (\text{km/h})$ \\
+        Kurzschlussstrom ($20\,\text{km/h}$) & $I_k$ & $550$ & $\text{mA}$ \\
+        Elektrische Frequenz ($20\,\text{km/h}$) & $f_{20}$ & $35{,}7$ & $\text{Hz}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Leistungssteigerung durch Serienkompensation}
+\label{subsec:serienkompensation}
+Bei der Analyse der Innenimpedanz wird das Kernproblem herkömmlicher Ladeschaltungen deutlich: Bei $20\,\text{km/h}$ ($f = 35{,}7\,\text{Hz}$) beträgt der induktive Blindwiderstand des Dynamos:
+\begin{equation}
+    X_L = 2\pi f L_s = 2\pi \cdot 35{,}7\,\text{Hz} \cdot 116{,}6\,\text{mH} \approx 26{,}17\,\Omega
+\end{equation}
+Der induktive Blindwiderstand ist damit mehr als achtmal so groß wie der ohmsche Wicklungswiderstand $R_i = 3{,}25\,\Omega$. Er begrenzt den Stromfluss und damit die an den Gleichrichter abgebbare elektrische Wirkleistung.
+
+Bereits 1985 schlug Kusmierz~\cite{kusmierz1985} vor, diesen induktiven Widerstand durch eine vorgeschaltete Reihenkapazität aufzuheben. Schmidt~\cite{schmidt2006} beschreibt diesen Ansatz ebenfalls für die Leistungssteigerung von Scheinwerfersystemen.
+
+Schaltet man eine bipolare Kapazität $C_s$ in Reihe zur Generatorwicklung, so heben sich induktiver und kapazitiver Blindwiderstand bei der Resonanzfrequenz $f_0$ exakt auf:
+\begin{equation}
+    X_{\text{ges}} = \omega L_s - \frac{1}{\omega C_s} \stackrel{!}{=} 0 \quad \Rightarrow \quad f_0 = \frac{1}{2\pi \sqrt{L_s C_s}}
+    \label{eq:serienresonanz}
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[scale=1.1, transform shape]
+        \draw (0,0)
+            to[sV, v<=$u_q(t)$] (0,2)
+            to[R, l=$R_i$] (2,2)
+            to[L, l=$L_s$] (4,2)
+            to[C, l=$C_s$] (6,2)
+            to[short, i>=$i(t)$] (7,2)
+            to[short, -o] (7.5,2) node[above] {$+$};
+            
+        \draw (0,0) to[short, -o] (7.5,0) node[below] {$-$};
+        \draw (7.5,2) to[open, v=$u_{\text{out}}(t)$] (7.5,0);
+        
+        \draw[dashed, red!80!black] (4.8, 1.2) rectangle (7.2, 2.7);
+        \node[red!80!black, above] at (6, 2.7) {\footnotesize Serienkompensation};
+    \end{circuitikz}
+    \caption{Erweitertes Ersatzschaltbild mit bipolarer Serienkompensationskapazität $C_s$}
+    \label{fig:serienkompensation_schaltplan}
+\end{figure}
+
+Wird die Resonanzfrequenz auf eine moderate Reisegeschwindigkeit von $v_0 \approx 15\text{--}18\,\text{km/h}$ (entspricht $f_0 \approx 25\text{--}30\,\text{Hz}$) ausgelegt, ergibt sich der erforderliche Kapazitätswert:
+\begin{equation}
+    C_s = \frac{1}{(2\pi f_0)^2 \cdot L_s} = \frac{1}{(2\pi \cdot 25{,}7\,\text{Hz})^2 \cdot 0{,}1166\,\text{H}} \approx 330\,\mu\text{F}
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=0.85\textwidth,
+            height=6.5cm,
+            xlabel={Fahrgeschwindigkeit $v$ in $\text{km/h}$},
+            ylabel={Abgebbare Wirkleistung $P$ in $\text{W}$},
+            xmin=5, xmax=35,
+            ymin=0, ymax=9,
+            grid=both,
+            grid style={line width=.1pt, draw=gray!20},
+            major grid style={line width=.2pt, draw=gray!50},
+            legend pos=north west,
+            legend cell align={left}
+        ]
+            % Standard Dynamo Kurve (ungefähr asymptotisch gegen 3W)
+            \addplot[thick, blue, domain=5:35, samples=40] {
+                ( (0.602*x)^2 * 12 ) / ( (3.25 + 12)^2 + (2*pi*1.784*x*0.1166)^2 )
+            };
+            \addlegendentry{Konventioneller Betrieb (ohne $C_s$)}
+
+            % Mit Serienkompensation (Peak bei ca. 16-18 km/h, deutlich höher)
+            \addplot[very thick, red!80!black, domain=5:35, samples=50] {
+                ( (0.602*x)^2 * 12 ) / ( (3.25 + 12)^2 + (2*pi*1.784*x*0.1166 - 1/(2*pi*1.784*x*0.000330 + 0.0001))^2 )
+            };
+            \addlegendentry{Mit Serienkompensation ($C_s = 330\,\mu\text{F}$)}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Vergleich der theoretisch erzielbaren Wirkleistung über der Fahrgeschwindigkeit}
+    \label{fig:leistung_kompensation}
+\end{figure}
+
+Wie der in \autoref{fig:leistung_kompensation} dargestellte Verlauf veranschaulicht, bewirkt die Serienkompensation im alltagsrelevanten Geschwindigkeitsfenster eine mehr als doppelte bis dreifache Wirkleistungsabgabe gegenüber dem Standardbetrieb. Damit bildet $C_s = 330\,\mu\text{F}$ das entscheidende Schaltungselement, um das 10- bis 15-Watt-Ladeziel der Studienarbeit überhaupt erst erreichbar zu machen.
+
+\section{Einordnung und Aufgabenstellung}
+\subsection{Einordnung und Motivation}
+Text für den Unterabschnitt...
+
+\subsection{Bisherige Lösung}
+Text für den Unterabschnitt...
+
+\subsection{Aufgabenstellung}
+Text für den Unterabschnitt...
+
+\section{Methodik und Implementierung}
+\subsection{Mathematische Formeln}
+Formeln lassen sich nummeriert im Text zentrieren:
+\begin{equation}
+    f = p \cdot \frac{v / 3{,}6}{U_{\text{Rad}}} = 14 \cdot \frac{v / 3{,}6}{2{,}18\,\text{m}}
+    \label{eq:frequenz}
+\end{equation}
+Auf Gleichung~\eqref{eq:frequenz} kann im Fließtext direkt verwiesen werden.
+
+\subsection{Einbinden von Abbildungen}
+Bilder bindest du wie folgt ein:
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{bilder/meine_grafik.png}
+    \rule{0.7\textwidth}{4cm} % Platzhalter, solange noch kein Bild existiert
+    \caption{Beispielhafte Darstellung der Topologie}
+    \label{fig:topologie}
+\end{figure}
+In Abbildung~\ref{fig:topologie} ist der schematische Aufbau dargestellt.
+
+\subsection{Einbinden von Tabellen}
+\begin{table}[htbp]
+    \centering
+    \caption{Bauteilwerte der Eingangsschaltung}
+    \label{tab:bauteile}
+    \begin{tabular}{llr}
+        \toprule
+        \textbf{Bauteil} & \textbf{Funktion} & \textbf{Wert} \\
+        \midrule
+        $R_i$ & Wicklungswiderstand & $2{,}2\,\Omega$ \\
+        $L_i$ & Streuinduktivität & $22\,\text{mH}$ \\
+        $C_s$ & Serienkompensation & $330\,\mu\text{F}$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+% ------------------------------------------------------------------------------
+% SCHLUSSTEIL: Literaturverzeichnis & Anhang
+% ------------------------------------------------------------------------------
+\newpage
+\printbibliography[heading=bibintoc,title={Literaturverzeichnis}]
+
+\newpage
+\appendix
+\section{Anhang}
+\subsection{Schaltpläne und Layouts}
+Hier können zusätzliche Messkurven, KiCad-Schaltpläne oder Datenblätter abgelegt werden.
+
+\end{document}

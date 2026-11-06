@@ -1,0 +1,33 @@
+\babel@toc {ngerman}{}\relax 
+\contentsline {section}{\numberline {1}Problemstellung und Ziel}{1}{section.1}%
+\contentsline {section}{\numberline {2}Anforderungsanalyse}{1}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Energiebereitstellung und Dynamoseite}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Energiespeicherung und Pufferung}{2}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Energieabgabe und Verbraucherseite}{3}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Betriebssicherheit und Umweltanforderungen}{3}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Strukturierte Anforderungsübersicht}{4}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Arten und Funktionsweise von Fahrraddynamos}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Vergleich gängiger Bauformen}{5}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Seitenläufer- und Felgendynamos}{5}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Nabendynamos und Begründung der Modellauswahl}{5}{subsubsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.2}Aufbau und physikalisches Wirkprinzip}{6}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Frequenz- und Drehzahlbeziehung}{6}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Leerlaufverhalten und Quellspannung}{7}{subsubsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.3}Herleitung des elektrischen Ersatzschaltbildes}{7}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Inhärente Strombegrenzung durch die Inneninduktivität}{8}{subsubsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.4}Messtechnische Parameterbestimmung des Shimano DH-T4050-1D}{8}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Messung des Wicklungswiderstands (R\_i)}{8}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Leerlaufversuch (Spannungskonstante k\_v)}{9}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Kurzschlussversuch (Synchrone Induktivität L\_s)}{9}{subsubsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.5}Leistungssteigerung durch Serienkompensation}{10}{subsection.3.5}%
+\contentsline {section}{\numberline {4}Einordnung und Aufgabenstellung}{11}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Einordnung und Motivation}{11}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Bisherige Lösung}{11}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Aufgabenstellung}{12}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Methodik und Implementierung}{12}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Mathematische Formeln}{12}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Einbinden von Abbildungen}{12}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Einbinden von Tabellen}{12}{subsection.5.3}%
+\contentsline {section}{Literaturverzeichnis}{13}{section*.15}%
+\contentsline {section}{\numberline {A}Anhang}{14}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}Schaltpläne und Layouts}{14}{subsection.A.1}%
