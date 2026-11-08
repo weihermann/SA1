@@ -16,18 +16,23 @@
 \contentsline {subsection}{\numberline {3.3}Herleitung des elektrischen Ersatzschaltbildes}{7}{subsection.3.3}%
 \contentsline {subsubsection}{\numberline {3.3.1}Inhärente Strombegrenzung durch die Inneninduktivität}{8}{subsubsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.4}Messtechnische Parameterbestimmung des Shimano DH-T4050-1D}{8}{subsection.3.4}%
-\contentsline {subsubsection}{\numberline {3.4.1}Messung des Wicklungswiderstands (R\_i)}{8}{subsubsection.3.4.1}%
-\contentsline {subsubsection}{\numberline {3.4.2}Leerlaufversuch (Spannungskonstante k\_v)}{9}{subsubsection.3.4.2}%
-\contentsline {subsubsection}{\numberline {3.4.3}Kurzschlussversuch (Synchrone Induktivität L\_s)}{9}{subsubsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.5}Leistungssteigerung durch Serienkompensation}{10}{subsection.3.5}%
-\contentsline {section}{\numberline {4}Einordnung und Aufgabenstellung}{11}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Einordnung und Motivation}{11}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Bisherige Lösung}{11}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Aufgabenstellung}{12}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Methodik und Implementierung}{12}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Mathematische Formeln}{12}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Einbinden von Abbildungen}{12}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Einbinden von Tabellen}{12}{subsection.5.3}%
-\contentsline {section}{Literaturverzeichnis}{13}{section*.15}%
-\contentsline {section}{\numberline {A}Anhang}{14}{appendix.A}%
-\contentsline {subsection}{\numberline {A.1}Schaltpläne und Layouts}{14}{subsection.A.1}%
+\contentsline {subsubsection}{\numberline {3.4.1}Messung des Wicklungswiderstands}{8}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Leerlaufversuch}{9}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Kurzschlussversuch}{10}{subsubsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.5}Leistungssteigerung durch Serienkompensation}{12}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Wirkleistung an der Normlast (unkompensierter Betrieb)}{12}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Dimensionierung der Serienkompensationskapazität}{13}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}Vollständiges Schaltbild der kompensierten Schaltung}{13}{subsubsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.4}Wirkleistung im kompensierten Betrieb an der Normlast}{14}{subsubsection.3.5.4}%
+\contentsline {subsubsection}{\numberline {3.5.5}Theoretisch maximale Wirkleistung (Leistungsanpassung)}{14}{subsubsection.3.5.5}%
+\contentsline {section}{\numberline {4}Einordnung und Aufgabenstellung}{17}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Einordnung und Motivation}{17}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Bisherige Lösung}{17}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Aufgabenstellung}{17}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Methodik und Implementierung}{17}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Mathematische Formeln}{17}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Einbinden von Abbildungen}{17}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Einbinden von Tabellen}{18}{subsection.5.3}%
+\contentsline {section}{Literaturverzeichnis}{19}{section*.20}%
+\contentsline {section}{\numberline {A}Anhang}{20}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}Schaltpläne und Layouts}{20}{subsection.A.1}%

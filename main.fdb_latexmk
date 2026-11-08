@@ -1,14 +1,14 @@
 # Fdb version 4
-["biber main"] 1793959548.4961 "main.bcf" "main.bbl" "main" 1793961379.10996 0
+["biber main"] 0 "main.bcf" "main.bbl" "main" 1794062252.82796 -1
   "literatur.bib" 1793959487.94121 1075 7574f7ddc7ca15927adb699fcdf90ee8 ""
-  "main.bcf" 1793961379.05266 107360 3c8167bd4146f1f5d3445d09d834fff5 "pdflatex"
+  "main.bcf" 1794062252.77142 107427 3f7c9d88f4cc5fee1f7796485e42b5a3 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1793961378.10533 "/home/dawg/Dokumente/Studium/SA1/main.tex" "main.pdf" "main" 1793961379.11015 0
+["pdflatex"] 1794062251.56698 "/home/dawg/Dokumente/Studium/SA1/main.tex" "main.pdf" "main" 1794062252.82815 0
   "/etc/texmf/web2c/texmf.cnf" 1792944607.05648 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/dawg/Dokumente/Studium/SA1/main.tex" 1793961377.97464 31679 d456884bf9fb9360a0bda2384a94fb17 ""
+  "/home/dawg/Dokumente/Studium/SA1/main.tex" 1794062251.4384 43177 e2e6d4d20bc048afcb2f32694bbc1d8d ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1200.tfm" 1136768653 3584 f80ddd985bd00e29e9a6047ebd9d4781 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -273,10 +273,10 @@
   "/usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb" 1254269338 30635 833ec815d446ec453a4913fc26d24cbc ""
   "/usr/share/texmf/fonts/type1/public/lm/lmr10.pfb" 1255129361 119235 f35b44530a1d90eb90fe15d9cba67ea0 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmr12.pfb" 1255129361 113634 f99c44d58bae0863375faf0e1d74d612 ""
-  "/usr/share/texmf/fonts/type1/public/lm/lmr6.pfb" 1255129361 123394 d390152bb30feeb496aaaa93299ee9ba ""
   "/usr/share/texmf/fonts/type1/public/lm/lmr8.pfb" 1255129361 122174 a7a08406857c9530a0320a2517f60370 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmri12.pfb" 1255129361 109265 32320cb6133d4d76bf83e27b5eb4009b ""
   "/usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb" 1254269338 27863 09ce3735688ffde955e72da27c95b61a ""
+  "/usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb" 1254269338 27802 5c876bb2c4040caaf035d60bd74a86bd ""
   "/usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb" 1255129361 110323 92daea7ca7b4120bd2b54b047c93be27 ""
   "/usr/share/texmf/tex/latex/lm/lmodern.sty" 1616454256 1608 b00724785a9e9c599e5181bb8729160b ""
   "/usr/share/texmf/tex/latex/lm/omllmm.fd" 1616454256 890 57f5adccd504fb5c98bdf99ed7e7f195 ""
@@ -290,14 +290,16 @@
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1792944613.07753 128028 f533b797fba58d231669ea19e894e23e ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1792944616 7277532 d84fdee71b5642de212e7671a2e08ece ""
   "img/DHBW-Logo.pdf" 1793887990.91015 16830 2b50c77fe42e2d5381566b7a543b3616 ""
-  "main.aux" 1793961379.05166 8690 34653aa0a8ec1ef02bd7ce79cef4ab69 "pdflatex"
-  "main.bbl" 1793959551.35014 3783 e947f6ac530d58cedecc5e5d0d40d886 "biber main"
-  "main.lof" 1793961379.05366 610 0b2b3f8426bf26e2ceae1947624db63c "pdflatex"
-  "main.lot" 1793961379.05366 406 55ed9d7557b33baee47f7ab92d317c39 "pdflatex"
-  "main.out" 1793961379.05266 7242 218d25c68025520f4773b3573248735c "pdflatex"
-  "main.run.xml" 1793961379.05366 2334 1b5b1514c9fec959a0c2940f259774d3 "pdflatex"
-  "main.tex" 1793961377.97464 31679 d456884bf9fb9360a0bda2384a94fb17 ""
-  "main.toc" 1793961379.05366 3196 45825f87c4d84ce061557752035b20ee "pdflatex"
+  "img/kurzschlussstrom_0_3Ohm_weiss.jpg" 1794048430.65944 117702 677ad957d0b864b1d1c71508aecd3b93 ""
+  "img/leerlaufspannung_weiss.jpg" 1794040544.99054 116764 042471ba46fbfeeca9ee8d71b622051d ""
+  "main.aux" 1794062252.76942 11019 82a509f8fdb6f1296cf0a33284f43cc1 "pdflatex"
+  "main.bbl" 1794059581.29856 3783 9ec5e9604781405271779c02a17e9633 "biber main"
+  "main.lof" 1794062252.77142 1275 08a420016ba1956b4730e9159e39e84e "pdflatex"
+  "main.lot" 1794062252.77142 406 a4d378133dc64ef6892bd3c0d522e31f "pdflatex"
+  "main.out" 1794062252.77042 8617 f67183f891216d1c498e9875ad1904da "pdflatex"
+  "main.run.xml" 1794062252.77142 2334 1b5b1514c9fec959a0c2940f259774d3 "pdflatex"
+  "main.tex" 1794062251.4384 43177 e2e6d4d20bc048afcb2f32694bbc1d8d ""
+  "main.toc" 1794062252.77142 3781 5febfeadc9da204bfad5a251d63a7b51 "pdflatex"
   (generated)
   "main.aux"
   "main.bcf"

@@ -7,6 +7,8 @@
 \usepackage[ngerman]{babel}
 \usepackage{csquotes}
 
+\usepackage{float}
+
 % --- Schaltungen ---
 \usepackage[european,straightvoltages]{circuitikz}
 
@@ -337,18 +339,20 @@ Aufgrund des getriebelosen Direktantriebs steht die Frequenz $f$ der induzierten
     f = p \cdot n_{\text{Rad}} = p \cdot \frac{v / 3{,}6}{U_{\text{Rad}}} = 14 \cdot \frac{v / 3{,}6}{2{,}18\,\text{m}} \approx 1{,}784 \cdot v \quad [\text{mit } v \text{ in km/h}]
     \label{eq:frequenz_herleitung}
 \end{equation}
-Bei Schrittgeschwindigkeit ($10\,\text{km/h}$) liegt die Generatorfrequenz somit bei rund $17{,}8\,\text{Hz}$, während sie bei $20\,\text{km/h}$ ca. $35{,}7\,\text{Hz}$ und bei schnellen Abfahrten ($40\,\text{km/h}$) rund $71{,}4\,\text{Hz}$ beträgt.
+Bei Schrittgeschwindigkeit ($6\,\text{km/h}$) liegt die Generatorfrequenz somit bei etwa $10{,}7\,\text{Hz}$. Bei der Normgeschwindigkeit von $15\,\text{km/h}$ ca. $26{,}8\,\text{Hz}$ 
+und bei schnellen Abfahrten ($40\,\text{km/h}$) rund $71{,}4\,\text{Hz}$.
 
 \subsubsection{Leerlaufverhalten und Quellspannung}
-Die Amplitude der induzierten Quellspannung $\hat{u}_q$ wächst proportional mit der zeitlichen Flussänderung $\mathrm{d}\Phi/\mathrm{d}t$ und damit streng linear mit der Winkelgeschwindigkeit $\omega$:
+Die Amplitude der induzierten Quellspannung $\hat{u}_q$ wächst proportional mit der zeitlichen Flussänderung $\mathrm{d}\Phi/\mathrm{d}t$ und damit linear mit der Winkelgeschwindigkeit $\omega$:
 \begin{equation}
     \hat{u}_q(v) = \sqrt{2} \cdot k_v \cdot v
     \label{eq:uq_linear}
 \end{equation}
-Hierbei definiert $k_v$ die generatorspezifische Spannungskonstante in $\text{V}_{\text{RMS}} / (\text{km/h})$. Im Leerlauf (keine Last am Ausgang angeschlossen) steigt die Spannung unbegrenzt mit der Geschwindigkeit an. Bei $v = 40\,\text{km/h}$ kann die Leerlaufspannung Spitzenwerte von über $45\text{--}50\,\text{V}$ erreichen.
+Hierbei definiert $k_v$ die generatorspezifische Spannungskonstante in $\text{V}_{\text{RMS}} / (\text{km/h})$. 
+Es wird ersichtlich, dass die Spannung in der Theorie unbegrenzt mit der Geschwindigkeit ansteigt, was die Folgeelektronik ohne zusätzlichen Schutz zerstören kann.
 
 \subsection{Herleitung des elektrischen Ersatzschaltbildes}
-Um das Betriebs- und Klemmenverhalten analytisch zu modellieren, wird das klassische Ersatzschaltbild nach Wullkopf~\cite{wullkopf1959} herangezogen, welches auch Schmidt~\cite{schmidt2006} detailliert beschreibt.
+Um das Betriebs- und Klemmenverhalten analytisch zu modellieren, wird das Ersatzschaltbild nach Wullkopf~\cite{wullkopf1959} herangezogen.
 
 \begin{figure}[htbp]
     \centering
@@ -368,11 +372,8 @@ Um das Betriebs- und Klemmenverhalten analytisch zu modellieren, wird das klassi
         % Klemmenspannung
         \draw (6.5,2) to[open, v=$u(t)$] (6.5,0);
         
-        % Umrandung
-        \draw[dashed, gray!70] (-0.8,-0.5) rectangle (5.5,2.8);
-        \node[gray!90, above right] at (-0.8,2.8) {\footnotesize Klauenpol-Nabendynamo};
     \end{circuitikz}
-    \caption{Lineares Wechselstrom-Ersatzschaltbild des Klauenpol-Nabendynamos}
+    \caption{Ersatzschaltbild des Klauenpol-Nabendynamos}
     \label{fig:dynamo_esb}
 \end{figure}
 
@@ -380,7 +381,7 @@ Das Ersatzschaltbild (\autoref{fig:dynamo_esb}) modelliert den Generator durch:
 \begin{itemize}
     \item die ideale, frequenzproportionale Spannungsquelle $u_q(t) = \hat{u}_q \cdot \sin(\omega t)$,
     \item den ohmschen Wicklungswiderstand $R_i$ der Kupferspule,
-    \item die synchrone Induktivität $L_s$ (auch als effektive Generatorinduktivität $L_{\text{eff}}$ bezeichnet).
+    \item die synchrone Generatorinduktivität $L_s$.
 \end{itemize}
 
 Die komplexe Innenimpedanz $\underline{Z}_i$ der Maschine lautet:
@@ -390,51 +391,324 @@ Die komplexe Innenimpedanz $\underline{Z}_i$ der Maschine lautet:
 \end{equation}
 
 \subsubsection{Inhärente Strombegrenzung durch die Inneninduktivität}
-Aus der Schaltung lässt sich eine fundamentale Eigenschaft von Fahrradlichtmaschinen ableiten: Unter Nenn- und Überlast verhält sich der Dynamo nicht wie eine Spannungsquelle, sondern wie eine \textbf{Konstantstromquelle}~\cite{schmidt2006}. 
+Aus der Schaltung lässt sich eine fundamentale Eigenschaft von Fahrradlichtmaschinen ableiten: Unter Nenn- und Überlast verhält sich der Dynamo nicht wie 
+eine Spannungsquelle, sondern wie eine Konstantstromquelle~\cite{schmidt2006}. 
 
 Betrachtet man den Kurzschlussfall ($R_L = 0\,\Omega$), so bestimmt sich der Kurzschlussstrom $\underline{I}_k$ zu:
 \begin{equation}
     \underline{I}_k = \frac{\underline{U}_q}{\underline{Z}_i} = \frac{\underline{U}_q}{R_i + \mathrm{j}\omega L_s}
 \end{equation}
-Da bereits ab geringen Fahrgeschwindigkeiten ($v > 10\,\text{km/h}$) der induktive Blindwiderstand den ohmschen Anteil dominiert ($\omega L_s \gg R_i$) und gleichzeitig die Quellspannung linear mit der Kreisfrequenz wächst ($\hat{u}_q = c \cdot \omega$), ergibt sich für den Betrag des Kurzschlussstroms:
+Da bereits ab geringen Fahrgeschwindigkeiten ($v > 10\,\text{km/h}$) der induktive Blindwiderstand den ohmschen Anteil dominiert 
+($\omega L_s \gg R_i$) und gleichzeitig die Quellspannung linear mit der Kreisfrequenz wächst ($\hat{u}_q = c \cdot \omega$), 
+ergibt sich für den Betrag des Kurzschlussstroms:
 \begin{equation}
     I_k \approx \frac{c \cdot \omega}{\omega L_s} = \frac{c}{L_s} \approx \text{konstant}
     \label{eq:konstantstrom}
 \end{equation}
-Die innere Induktivität $L_s$ wirkt somit als verlustloser, frequenzproportionaler Vorwiderstand, der den Entnahmestrom physikalisch auf ca. $500\text{--}550\,\text{mA}$ deckelt. Während diese Eigenschaft bei Glühbirnen das Durchbrennen bei Schnellfahrt verhinderte, drosselt sie an einer modernen Ladeschaltung die maximal entnehmbare Wirkleistung.
+Die innere Induktivität $L_s$ wirkt somit als verlustloser, frequenzproportionaler Vorwiderstand, der den Entnahmestrom physikalisch 
+auf ca. $500\text{--}550\,\text{mA}$ deckelt. Während diese Eigenschaft bei Glühbirnen das Durchbrennen bei Schnellfahrt verhinderte, 
+drosselt sie an einer modernen Ladeschaltung die maximal entnehmbare Wirkleistung.
 
 \subsection{Messtechnische Parameterbestimmung des Shimano DH-T4050-1D}
 \label{subsec:messung}
-Für eine präzise Dimensionierung der Lade- und Kompensationskomponenten wurden die Kenngrößen des Shimano DH-T4050-1D experimentell im Labor bestimmt.
+Für eine initiale Dimensionierung der Lade- und Kompensationskomponenten werden die Kenngrößen 
+des Shimano DH-T4050-1D experimentell bestimmt.
 
-\subsubsection{Messung des Wicklungswiderstands (R\_i)}
-Aufgrund des niedrigen Widerstands im einstelligen Ohm-Bereich wurde eine Vierleiter-Kelvin-Messung im Stillstand durchgeführt. Übergangswiderstände an den Klemmen und Zuleitungseinflüsse wurden dadurch eliminiert. Es ergab sich ein rein ohmscher Wicklungswiderstand von:
+\subsubsection{Messung des Wicklungswiderstands}
+Aufgrund des erwartungsgemäß geringen Kupferwiderstands der Wicklungen wird eine Vierleitermessung durchgeführt.
+Konkret wird mit einem Labornetzteil ein konstanter Strom $I_C$ eingeprägt, und zeitgleich die Klemmspannung $U_K$ 
+unmittelbar am Generator gemessen.
+Das Rad befindet sich hierfür im Stillstand, damit beträgt die Frequenz $f=0\text{Hz}$. 
+Die induzierte Spannung $u_q(t)$ mit $f=0\text{Hz}$ beträgt 
+
+\begin{center}
+    $u_q(t) = \hat{u}_q \cdot \sin(2 \cdot \pi \cdot 0 \cdot t) = 0\text{V}$
+\end{center}
+
+Der Wert des induktiven Blindwiderstands $X_L$ mit $f=0\text{Hz}$ beträgt
+\begin{center}
+    $X_L= 2 \cdot \pi \cdot 0\text{Hz} \cdot L_s = 0\Omega$
+\end{center}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{circuitikz}[scale=1.1, transform shape]
+        % Generatorzweig
+        \draw (0,0)
+            to[sV, v<=$u_q(t)$] (0,2)
+            to[R, l=$R_i$] (2.5,2)
+            to[L, l=$L_s$] (5,2)
+            to[short, -o] (6,2)
+            to[short] (8,2)
+            to[I, i<=$I_C$] (8,0);
+        % Rückleitung
+        \draw (0,0)
+            to[short] (8,0)
+            to[short, -o] (6, 0);
+            
+        % Klemmenspannung
+        \draw (6,2) 
+            to[open, v=$U_K$] (6,0);
+        
+    \end{circuitikz}
+    \caption{Messung des Kupferwiderstands des Klauenpol-Nabendynamos}
+    \label{fig:dynamo_messung_R_i}
+\end{figure}
+
+Das Messmittel der Wahl ist vom Typ UT139C mit einem relativen Spannungsfehler von $0{,}5\text{\%} + 2 \text{ Digits}$. 
+
+Der rechnerische Spannungsfehler beträgt damit 
+\begin{center}
+    $\Delta U = \pm 0{,}005 \cdot 1{,}600V + 2 \cdot 0{,}001V = \pm (8mV + 2mV) = \pm 10mV$
+\end{center}
+
+Mit den oben bestimmten Werten für $X_L$ und $u_q(t)$ und des gemessenen Werts 
+\begin{center}
+    $U_K = 1{,}6\text{V}$
+\end{center}
+
+vereinfacht sich die Berechnung des Widerstandswerts auf 
 \begin{equation}
-    R_i = 3{,}25\,\Omega
+    R_i = \frac{U_K}{I_C} = \frac{1{,}6\text{V}}{0{,}5\text{A}} = 3{,}2 \Omega
 \end{equation}
 
-\subsubsection{Leerlaufversuch (Spannungskonstante k\_v)}
-Der Dynamo wurde über einen Prüfstand bei variabler Drehzahl angetrieben und die Ausgangsspannung hochohmig ohne Last ($R_L \to \infty$) mit einem Oszilloskop und einem Echteffektivwert-Multimeter erfasst. 
+\subsubsection{Leerlaufversuch}
+Das Rad wird auf eine Konstante Drehzahl bzw. Frequenz beschleunigt. Der Ausgang des Generators ist Lastfrei, d.h.
+$R_L \to \infty$. Mit einem Oszilloskop wird die Frequenz und der Effektivwert der Ausgangsspannung ermittelt. 
 
-Die Auswertung der Messreihe ergab einen streng linearen Anstieg mit der Spannungskonstante:
-\begin{equation}
-    k_v = 0{,}602\,\frac{\text{V}_{\text{RMS}}}{\text{km/h}} \quad \Rightarrow \quad \hat{u}_q(v) = \sqrt{2} \cdot 0{,}602 \cdot v \approx 0{,}851 \cdot v
-\end{equation}
-Bei der Referenz-Reisegeschwindigkeit von $v = 20\,\text{km/h}$ liefert der Generator eine Leerlaufspannung von $U_{q,\text{RMS}} = 12{,}04\,\text{V}$ bzw. eine Spitzenspannung von $\hat{u}_q \approx 17{,}03\,\text{V}$.
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=150mm]{img/leerlaufspannung_weiss.jpg}
+\caption{Oszillogramm - Spannung im Leerlaufversuch \label{fig:u_leerlauf}}
+\end{figure}
 
-\subsubsection{Kurzschlussversuch (Synchrone Induktivität L\_s)}
-Zur experimentellen Ermittlung von $L_s$ wurde der Generator über einen induktionsarmen Vierleiter-Messshunt ($R_{\text{Shunt}} = 0{,}30\,\Omega$) kurzgeschlossen. Bei einer Fahrgeschwindigkeit von $v = 20\,\text{km/h}$ ($f = 35{,}7\,\text{Hz}$) wurde ein stabiler Kurzschlussstrom von:
+Aus Abbildung \ref{fig:u_leerlauf} wird ersichtlich, dass der Effektivwert der Generatorspannung etwa $8{,}8V$ beträgt. 
+Die Frequenz von $26\text{Hz}$ entspricht in etwa der Referenzgeschwindigkeit von $15\frac{\text{km}}{\text{h}}$. 
+Damit berechnet sich die Spannungskonstante $k_v$ durch 
+\begin{equation*}
+    k_v = \frac{V_{RMS}}{v} = \frac{8{,}8V}{15\frac{\text{km}}{\text{h}}} \approx 0{,}59
+\end{equation*}
+
+Schließlich kann der Scheitelwert der Generatorspannung durch 
+\begin{equation*}
+    \hat{u}_q(v) = \sqrt{2} \cdot 0{,}59 \frac{V}{\frac{km}{h}} \cdot v = 0{,}834 \frac{V}{\frac{km}{h}} \cdot v
+\end{equation*}
+
+bzw. der Zeitliche Verlauf der Generatorspannung durch
+\begin{equation*}
+    u_q(t) = 0{,}834 \frac{V}{\frac{km}{h}} \cdot v \cdot \sin(\omega \cdot t)
+\end{equation*} 
+beschrieben werden. 
+
+Bei langsamer Fahrt ($10\frac{\text{km}}{\text{h}}$) beträgt die Spannung 
+\begin{equation*}
+    U_q = k_v \cdot 10\frac{\text{km}}{\text{h}} = 5{,}9V
+\end{equation*}
+
+bei zügiger Fahrt mit $25\frac{\text{km}}{\text{h}}$ hingegen
+\begin{equation*}
+    U_q = k_v \cdot 25\frac{\text{km}}{\text{h}} = 14{,}75V
+\end{equation*}
+
+\subsubsection{Kurzschlussversuch}
+Zur Bestimmung der Induktivität $L_s$ wird der Generator zunächst mit einem Shunt-Widerstand kurzgeschlossen.
+Der Wert von $R_{Shunt}$ beträgt $0{,}3\,\Omega$.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{circuitikz}[scale=1.1, transform shape]
+        % Generatorzweig
+        \draw (0,0)
+            to[sV, v<=$u_q(t)$] (0,2)
+            to[R, l=$R_i$] (2.5,2)
+            to[L, l=$L_s$] (5,2)
+            to[short, -o] (5,2)
+            to[short, i>=$i_s(t)$] (7,2)
+            to[short] (7,2)
+            to[R, l=$R_{Shunt}$] (7,0);
+        % Rückleitung
+        \draw (0,0)
+            to[short] (7, 0)
+            to[short, -o] (5, 0);
+        % Klemmenspannung
+        \draw (6.5,2) 
+            to[open, v=$u_{s}(t)$] (6.5,0);
+    \end{circuitikz}
+    \caption{ESB zur Messung des Kurzschlussstroms}
+    \label{fig:dynamo_esb_messung_i_s}
+\end{figure}
+
+Abbildung \ref{fig:dynamo_esb_messung_i_s} skizziert den elektrischen Messaufbau. Die Spannung $u_s(t)$ wird mit dem 
+Oszilloskop aufgezeichnet, während das Rad mit der Referenzgeschwindigkeit $15\,\frac{\text{km}}{\text{h}}$ angetrieben wird.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=150mm]{img/kurzschlussstrom_0_3Ohm_weiss.jpg}
+\caption{Oszillogramm - Spannung über Shuntwiderstand im Kurzschlussversuch \label{fig:dynamo_oszi_messung_i_s}}
+\end{figure}
+
+Aus Abbildung \ref{fig:dynamo_oszi_messung_i_s} lässt sich der Effektivwert von $u_s(t)$ mit
+\begin{equation*}
+    U_S = 136\,\text{mV}
+\end{equation*}
+ablesen. 
+Nach dem Ohm'schen Gesetz wird der Strom nun berechnet durch 
+\begin{equation*}
+    I_S = \frac{U_S}{R_S} = \frac{136\,\text{mV}}{0{,}3\, \Omega} \approx 0{,}453\, \text{A}
+\end{equation*} 
+
+Die Gesamtimpedanz des Netzwerks beträgt
+\begin{equation*}
+    |Z_{ges}| = \frac{V_{RMS}}{I_{S}} = \frac{8{,}78\,\text{V}}{0{,}453\,\text{A}} = 19{,}38\,\Omega
+\end{equation*}
+
+\begin{equation*}
+    Z_{ges}\,^2\, = X_L\,^2\, + (R_i\, + R_S)^2\,
+    \Rightarrow\,
+    X_L = \sqrt{Z_{ges}\,^2\, - (R_i\, + R_S)^2}
+\end{equation*}
+
+Umgestellt nach dem Wert der Induktivität $L_s$ ergibt sich der Wert
+\begin{equation*}
+    L_s = \frac{ \sqrt{Z_{ges}\,^2\, - (R_i\, + R_S)^2} }{2 \cdot \pi \cdot f} = 
+    \frac{ \sqrt{19{,}38\,\Omega\,^2\, - (3{,}2\,\Omega + 0{,}3\,\Omega)^2} }{2 \cdot \pi \cdot 26\,\text{Hz}} 
+    \approx 116{,}7\,\text{mH}
+\end{equation*}
+
+\subsection{Leistungssteigerung durch Serienkompensation}
+\label{subsec:serienkompensation}
+
+Um die durch die Induktivität bedingte Leistungsbegrenzung zu quantifizieren, wird zunächst die Wirkleistungsabgabe des 
+unkompensierten Dynamos an einer genormten Prüflast betrachtet. Nach den technischen Prüfbestimmungen für Fahrradlichtmaschinen 
+(TA~24 bzw. DIN~EN~15194) wird als Referenz eine Normlast von 
+\begin{equation*}
+    R_L = 12\,\Omega
+\end{equation*}
+definiert, was der Nennbelastung einer klassischen 6-V-/3-W-Fahrradbeleuchtung entspricht. Die Nenngeschwindigkeit (Normgeschwindigkeit) beträgt hierbei $v = 15\,\frac{\text{km}}{\text{h}}$, was gemäß den Messungen aus \autoref{subsec:messung} einer Generatorfrequenz von $f = 26\,\text{Hz}$ und einer Leerlaufspannung von $U_q = 8{,}78\,\text{V}$ entspricht.
+
+\subsubsection{Wirkleistung an der Normlast (unkompensierter Betrieb)}
+Bei $f = 26\,\text{Hz}$ besitzt die synchrone Induktivität $L_s = 116{,}7\,\text{mH}$ einen induktiven Blindwiderstand von:
+\begin{equation*}
+    X_L = \omega L_s = 2\pi \cdot 26\,\text{Hz} \cdot 116{,}7\,\text{mH} \approx 19{,}06\,\Omega
+\end{equation*}
+Dieser Blindwiderstand übersteigt den ohmschen Innenwiderstand $R_i = 3{,}2\,\Omega$ um nahezu das Sechsfache. 
+
+Wird die Normlast $R_L = 12\,\Omega$ an die Klemmen des Dynamos angeschlossen, berechnet sich der Betrag der Gesamtimpedanz 
+$|Z_{\text{ges}}|$ im Stromkreis zu:
+\begin{equation*}
+    |Z_{\text{ges}}| = \sqrt{(R_i + R_L)^2 + X_L^2} = \sqrt{(3{,}2\,\Omega + 12\,\Omega)^2 + (19{,}06\,\Omega)^2} \approx 24{,}38\,\Omega
+\end{equation*}
+Der resultierende Laststrom $I_L$ ergibt sich nach dem ohmschen Gesetz für Wechselstrom:
+\begin{equation*}
+    I_L = \frac{U_q}{|Z_{\text{ges}}|} = \frac{8{,}78\,\text{V}}{24{,}38\,\Omega} \approx 0{,}360\,\text{A}
+\end{equation*}
+Damit beträgt die am Lastwiderstand $R_L$ umgesetzte nutzbare Wirkleistung $P_L$:
+\begin{equation*}
+    P_L = I_L^2 \cdot R_L = (0{,}360\,\text{A})^2 \cdot 12\,\Omega \approx 1{,}56\,\text{W}
+\end{equation*}
+Die berechnete Wirkleistung $P_L$ durch das vereinfachte ESB bei Nenngeschwindigkeit und unter Nennlast ist also vergleichbar 
+mit der Angabe des Herstellers ($1{,}5\,\text{W}$). 
+
+\subsubsection{Dimensionierung der Serienkompensationskapazität}
+Um den leistungshemmenden induktiven Blindwiderstand zu eliminieren, wird das von Kusmierz~\cite{kusmierz1985} vorgeschlagene 
+und von Schmidt~\cite{schmidt2006} beschriebene Prinzip der Reihenresonanz angewendet. Schaltet man eine Kapazität $C_s$ in 
+Reihe zur Generatorwicklung, so subtrahiert sich der kapazitive Blindwiderstand $X_C = \frac{1}{\omega C_s}$ vom induktiven Blindwiderstand $X_L$:
+\begin{equation*}
+    X_{\text{ges}} = X_L - X_C = \omega L_s - \frac{1}{\omega C_s} \stackrel{!}{=} 0
+\end{equation*}
+Für die vollständige Kompensation des Blindanteils bei der Normfrequenz $f = 26\,\text{Hz}$ ($v = 15\,\frac{\text{km}}{\text{h}}$) muss die Resonanzbedingung $\omega^2 L_s C_s = 1$ erfüllt sein. Umgestellt nach $C_s$ ergibt sich:
+\begin{equation*}
+    C_s = \frac{1}{\omega^2 \cdot L_s} = \frac{1}{(2\pi \cdot 26\,\text{Hz})^2 \cdot 0{,}1167\,\text{H}} \approx 321{,}1\,\mu\text{F}
+\end{equation*}
+
+Aus praktischer Sicht sind an dieser Stelle die folgenden Aspekte zu beachten:
+\begin{itemize}
+    \item Die verbaute Kapazität muss zwingend ein bipolarer Kondensator sein, denn dieser wird an einer Wechselspannung betrieben
+    \item Ein Kondensator mit dem exakten Wert für $C_s$ wird mit großer Wahrscheinlichkeit nicht existieren. Aus diesem Grund muss der 
+    nächstliegende verfügbare Wert gewählt werden, beispielsweise $C_s = 330\,\mu\text{F}$
+\end{itemize}
+
+\subsubsection{Vollständiges Schaltbild der kompensierten Schaltung}
+In \autoref{fig:dynamo_kompensiert} ist das vollständige Ersatzschaltbild des mit $C_s$ kompensierten Dynamos unter Normlast dargestellt.
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[scale=1.1, transform shape]
+        % Generatorzweig mit Quelle, Innenwiderstand und Induktivität
+        \draw (0,0)
+            to[sV, v<=$u_q(t)$] (0,2)
+            to[R, l=$R_i$] (2.2,2)
+            to[L, l=$L_s$] (4.4,2);
+            
+        % Serienkompensation
+        \draw (4.4,2)
+            to[C, l=$C_s$] (6.4,2)
+            to[short, -o] (6.8,2)
+            to[short, i>=$I_{L,\text{komp}}$] (8.5,2)
+            to[R, l=$R_L$] (8.5,0);
+            
+        % Rückleitung
+        \draw (0,0)
+            to[short] (8.5,0)
+            to[short, -o] (6.8,0);
+            
+        % Klemmenbeschriftung
+        \draw (6.8,2) to[open, v=$u_L(t)$] (6.8,0);
+        
+        % Kennzeichnung des Dynamos und der Kompensation
+        \draw[dashed, gray!70] (-0.8,-0.5) rectangle (4.6,2.8);
+        \node[gray!90, above right] at (-0.8,2.8) {\footnotesize Dynamo};
+        
+        \draw[dashed, red!80!black] (4.8,-0.5) rectangle (6.6,2.8);
+        \node[red!80!black, above] at (5.7,2.8) {\footnotesize Kompensation};
+    \end{circuitikz}
+    \caption{Vollständiges Ersatzschaltbild des Dynamos mit Serienkompensation $C_s$ an Normlast}
+    \label{fig:dynamo_kompensiert}
+\end{figure}
+
+\subsubsection{Wirkleistung im kompensierten Betrieb an der Normlast}
+Im Resonanzfall heben sich die Blindwiderstände exakt auf ($X_L - X_C = 0\,\Omega$). 
+Die verbleibende Gesamtimpedanz ist rein reell und besteht nur noch aus der Summe der ohmschen Widerstände:
+\begin{equation*}
+    Z_{\text{ges,komp}} \approx R_i + R_L = 3{,}2\,\Omega + 12\,\Omega = 15{,}2\,\Omega
+\end{equation*}
+Der Strom durch die Normlast steigt dadurch signifikant an:
+\begin{equation*}
+    I_{L,\text{komp}} = \frac{U_q}{R_i + R_L} = \frac{8{,}78\,\text{V}}{15{,}2\,\Omega} \approx 0{,}578\,\text{A}
+\end{equation*}
+Für die an der Normlast $R_L = 12\,\Omega$ umgesetzte Wirkleistung $P_{L,\text{komp}}$ folgt:
+\begin{equation*}
+    P_{L,\text{komp}} = I_{L,\text{komp}}^2 \cdot R_L = (0{,}578\,\text{A})^2 \cdot 12\,\Omega \approx 4\,\text{W}
+\end{equation*}
+Allein durch das Einfügen des Kondensators $C_s$ steigt die abgegebene Wirkleistung an der Normlast bei 
+$15\,\frac{\text{km}}{\text{h}}$ von $1{,}56\,\text{W}$ auf $4\,\text{W}$.
+
+\subsubsection{Theoretisch maximale Wirkleistung (Leistungsanpassung)}
+Um zu ermitteln, welche maximale Wirkleistung der Generator bei Normgeschwindigkeit überhaupt abgeben kann, wird der Fall 
+der **Leistungsanpassung** betrachtet. Nach dem Theorem der maximalen Leistungsübertragung wird an einer Last dann die maximale 
+Wirkleistung umgesetzt, wenn der Lastwiderstand gleich der konjugiert komplexen Innenimpedanz der Quelle ist:
 \begin{equation}
-    I_k = 550\,\text{mA}
+    \underline{Z}_L \stackrel{!}{=} \underline{Z}_i^*
 \end{equation}
-gemessen. Über den Betrag der Gesamtimpedanz im Kurzschlusskreis
+Da der Blindanteil der Quelle durch $C_s$ bereits zu Null kompensiert wurde ($\text{Im}\{\underline{Z}_i\} = 0$), 
+muss der optimale Lastwiderstand rein reell sein und exakt dem ohmschen Innenwiderstand entsprechen:
 \begin{equation}
-    |\underline{Z}_{\text{ges}}| = \frac{U_{q,\text{RMS}}}{I_k} = \sqrt{(R_i + R_{\text{Shunt}})^2 + (2\pi f L_s)^2}
+    R_{L,\text{opt}} = R_i = 3{,}2\,\Omega
 \end{equation}
-lässt sich die synchrone Induktivität $L_s$ durch Umstellen analytisch berechnen:
+Der Strom bei Leistungsanpassung beträgt:
 \begin{equation}
-    L_s = \frac{\sqrt{\left(\frac{U_{q,\text{RMS}}}{I_k}\right)^2 - (R_i + R_{\text{Shunt}})^2}}{2\pi f} = \frac{\sqrt{\left(\frac{12{,}04\,\text{V}}{0{,}550\,\text{A}}\right)^2 - (3{,}25\,\Omega + 0{,}30\,\Omega)^2}}{2\pi \cdot 35{,}7\,\text{Hz}} = 116{,}6\,\text{mH}
+    I_{\text{opt}} = \frac{U_q}{R_i + R_{L,\text{opt}}} = \frac{U_q}{2 \cdot R_i} = \frac{8{,}78\,\text{V}}{2 \cdot 3{,}2\,\Omega} \approx 1{,}372\,\text{A}
 \end{equation}
+Die dabei maximal entnehmbare Generatorwirkleistung $P_{\text{max}}$ berechnet sich zu:
+\begin{equation}
+    P_{\text{max}} = \frac{U_q^2}{4 \cdot R_i} = \frac{(8{,}78\,\text{V})^2}{4 \cdot 3{,}2\,\Omega} \approx 6{,}02\,\text{W}
+\end{equation}
+Dieses Ergebnis verdeutlicht das enorme Potenzial der Kompensation: Während der unkompensierte Dynamo an $12\,\Omega$ lediglich $1{,}56\,\text{W}$ 
+bereitstellt, besitzt die Maschine bei $15\,\frac{\text{km}}{\text{h}}$ ein physikalisches Wirkleistungspotenzial von über **$6\,\text{W}$**. 
+
+Da die nachfolgende Ladeschaltung keinen rein ohmschen Festwiderstand darstellt, sondern über einen geregelten Schaltregler betrieben wird, 
+kann die Eingangsimpedanz des Wandlers gezielt auf einen optimalen Betriebspunkt geregelt werden, um diese Leistung nutzbar zu machen.
+\dots 
 
 In \autoref{tab:dynamo_parameter} sind die ermittelten Modellparameter des Shimano-Nabendynamos zusammengefasst.
 
@@ -456,8 +730,8 @@ In \autoref{tab:dynamo_parameter} sind die ermittelten Modellparameter des Shima
     \end{tabular}
 \end{table}
 
-\subsection{Leistungssteigerung durch Serienkompensation}
-\label{subsec:serienkompensation}
+% \subsection{Leistungssteigerung durch Serienkompensation}
+% \label{subsec:serienkompensation}
 Bei der Analyse der Innenimpedanz wird das Kernproblem herkömmlicher Ladeschaltungen deutlich: Bei $20\,\text{km/h}$ ($f = 35{,}7\,\text{Hz}$) beträgt der induktive Blindwiderstand des Dynamos:
 \begin{equation}
     X_L = 2\pi f L_s = 2\pi \cdot 35{,}7\,\text{Hz} \cdot 116{,}6\,\text{mH} \approx 26{,}17\,\Omega
