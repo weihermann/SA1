@@ -31,20 +31,8 @@
 
 \pagestyle{fancy}
 \fancyhf{} % Vorherige Header/Footer leeren
-
-% Kopfzeile: Mitte Titel, Rechts DHBW-Logo
-% \fancyhead[C]{\small Studienarbeit 1}
-\fancyhead[R]{%
-    \IfFileExists{img/DHBW-Logo.pdf}{%
-        \includegraphics[height=1.1cm]{img/DHBW-Logo}%
-    }{%
-        \textbf{\color{red!80!black}DHBW}\\\tiny Duale Hochschule\\Baden-Württemberg%
-    }%
-}
-
-% Fußzeile: Seitenzahl unten rechts
-\fancyfoot[R]{\thepage}
-\renewcommand{\headrulewidth}{0pt} % Keine störende Linie unter den Logos
+\fancyhead[R]{\includegraphics[height=1.1cm]{img/DHBW-Logo}}
+\renewcommand{\headrulewidth}{0pt} % Keine Linie unter dem Logo bei Deckblatt
 
 % --- Tabellen, Bilder und Formeln ---
 \usepackage{booktabs}
@@ -105,6 +93,16 @@
         \end{tabular}
     \end{table}
 \end{titlepage}
+
+
+\fancyhf{} % Vorherige Header/Footer leeren
+% Kopfzeile
+\fancyhead[C]{\small Studienarbeit 1}
+\fancyhead[R]{\includegraphics[height=1.1cm]{img/DHBW-Logo}}
+\fancyhead[L]{Loris  De Marco}
+\renewcommand{\headrulewidth}{1px} % Dünne Linie unter Kopfzeile
+% Fußzeile: Seitenzahl unten rechts
+\fancyfoot[R]{\thepage}
 
 % ------------------------------------------------------------------------------
 % VORSPANN: Römische Nummerierung
@@ -683,35 +681,8 @@ Für die an der Normlast $R_L = 12\,\Omega$ umgesetzte Wirkleistung $P_{L,\text{
 Allein durch das Einfügen des Kondensators $C_s$ steigt die abgegebene Wirkleistung an der Normlast bei 
 $15\,\frac{\text{km}}{\text{h}}$ von $1{,}56\,\text{W}$ auf $4\,\text{W}$.
 
-\subsubsection{Theoretisch maximale Wirkleistung (Leistungsanpassung)}
-Um zu ermitteln, welche maximale Wirkleistung der Generator bei Normgeschwindigkeit überhaupt abgeben kann, wird der Fall 
-der **Leistungsanpassung** betrachtet. Nach dem Theorem der maximalen Leistungsübertragung wird an einer Last dann die maximale 
-Wirkleistung umgesetzt, wenn der Lastwiderstand gleich der konjugiert komplexen Innenimpedanz der Quelle ist:
-\begin{equation}
-    \underline{Z}_L \stackrel{!}{=} \underline{Z}_i^*
-\end{equation}
-Da der Blindanteil der Quelle durch $C_s$ bereits zu Null kompensiert wurde ($\text{Im}\{\underline{Z}_i\} = 0$), 
-muss der optimale Lastwiderstand rein reell sein und exakt dem ohmschen Innenwiderstand entsprechen:
-\begin{equation}
-    R_{L,\text{opt}} = R_i = 3{,}2\,\Omega
-\end{equation}
-Der Strom bei Leistungsanpassung beträgt:
-\begin{equation}
-    I_{\text{opt}} = \frac{U_q}{R_i + R_{L,\text{opt}}} = \frac{U_q}{2 \cdot R_i} = \frac{8{,}78\,\text{V}}{2 \cdot 3{,}2\,\Omega} \approx 1{,}372\,\text{A}
-\end{equation}
-Die dabei maximal entnehmbare Generatorwirkleistung $P_{\text{max}}$ berechnet sich zu:
-\begin{equation}
-    P_{\text{max}} = \frac{U_q^2}{4 \cdot R_i} = \frac{(8{,}78\,\text{V})^2}{4 \cdot 3{,}2\,\Omega} \approx 6{,}02\,\text{W}
-\end{equation}
-Dieses Ergebnis verdeutlicht das enorme Potenzial der Kompensation: Während der unkompensierte Dynamo an $12\,\Omega$ lediglich $1{,}56\,\text{W}$ 
-bereitstellt, besitzt die Maschine bei $15\,\frac{\text{km}}{\text{h}}$ ein physikalisches Wirkleistungspotenzial von über **$6\,\text{W}$**. 
-
-Da die nachfolgende Ladeschaltung keinen rein ohmschen Festwiderstand darstellt, sondern über einen geregelten Schaltregler betrieben wird, 
-kann die Eingangsimpedanz des Wandlers gezielt auf einen optimalen Betriebspunkt geregelt werden, um diese Leistung nutzbar zu machen.
-\dots 
 
 In \autoref{tab:dynamo_parameter} sind die ermittelten Modellparameter des Shimano-Nabendynamos zusammengefasst.
-
 \begin{table}[H]
     \centering
     \caption{Experimentell bestimmte Modellparameter des Shimano DH-T4050-1D}
@@ -721,134 +692,11 @@ In \autoref{tab:dynamo_parameter} sind die ermittelten Modellparameter des Shima
         \textbf{Parameter} & \textbf{Formelzeichen} & \textbf{Messwert} & \textbf{Einheit} \\
         \midrule
         Polpaarzahl & $p$ & $14$ & -- \\
-        Wicklungswiderstand & $R_i$ & $3{,}25$ & $\Omega$ \\
-        Synchrone Induktivität & $L_s$ & $116{,}6$ & $\text{mH}$ \\
-        Spannungskonstante & $k_v$ & $0{,}602$ & $\text{V}_{\text{RMS}} / (\text{km/h})$ \\
-        Kurzschlussstrom ($20\,\text{km/h}$) & $I_k$ & $550$ & $\text{mA}$ \\
-        Elektrische Frequenz ($20\,\text{km/h}$) & $f_{20}$ & $35{,}7$ & $\text{Hz}$ \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-% \subsection{Leistungssteigerung durch Serienkompensation}
-% \label{subsec:serienkompensation}
-Bei der Analyse der Innenimpedanz wird das Kernproblem herkömmlicher Ladeschaltungen deutlich: Bei $20\,\text{km/h}$ ($f = 35{,}7\,\text{Hz}$) beträgt der induktive Blindwiderstand des Dynamos:
-\begin{equation}
-    X_L = 2\pi f L_s = 2\pi \cdot 35{,}7\,\text{Hz} \cdot 116{,}6\,\text{mH} \approx 26{,}17\,\Omega
-\end{equation}
-Der induktive Blindwiderstand ist damit mehr als achtmal so groß wie der ohmsche Wicklungswiderstand $R_i = 3{,}25\,\Omega$. Er begrenzt den Stromfluss und damit die an den Gleichrichter abgebbare elektrische Wirkleistung.
-
-Bereits 1985 schlug Kusmierz~\cite{kusmierz1985} vor, diesen induktiven Widerstand durch eine vorgeschaltete Reihenkapazität aufzuheben. Schmidt~\cite{schmidt2006} beschreibt diesen Ansatz ebenfalls für die Leistungssteigerung von Scheinwerfersystemen.
-
-Schaltet man eine bipolare Kapazität $C_s$ in Reihe zur Generatorwicklung, so heben sich induktiver und kapazitiver Blindwiderstand bei der Resonanzfrequenz $f_0$ exakt auf:
-\begin{equation}
-    X_{\text{ges}} = \omega L_s - \frac{1}{\omega C_s} \stackrel{!}{=} 0 \quad \Rightarrow \quad f_0 = \frac{1}{2\pi \sqrt{L_s C_s}}
-    \label{eq:serienresonanz}
-\end{equation}
-
-\begin{figure}[H]
-    \centering
-    \begin{circuitikz}[scale=1.1, transform shape]
-        \draw (0,0)
-            to[sV, v<=$u_q(t)$] (0,2)
-            to[R, l=$R_i$] (2,2)
-            to[L, l=$L_s$] (4,2)
-            to[C, l=$C_s$] (6,2)
-            to[short, i>=$i(t)$] (7,2)
-            to[short, -o] (7.5,2) node[above] {$+$};
-            
-        \draw (0,0) to[short, -o] (7.5,0) node[below] {$-$};
-        \draw (7.5,2) to[open, v=$u_{\text{out}}(t)$] (7.5,0);
-        
-        \draw[dashed, red!80!black] (4.8, 1.2) rectangle (7.2, 2.7);
-        \node[red!80!black, above] at (6, 2.7) {\footnotesize Serienkompensation};
-    \end{circuitikz}
-    \caption{Erweitertes Ersatzschaltbild mit bipolarer Serienkompensationskapazität $C_s$}
-    \label{fig:serienkompensation_schaltplan}
-\end{figure}
-
-Wird die Resonanzfrequenz auf eine moderate Reisegeschwindigkeit von $v_0 \approx 15\text{--}18\,\text{km/h}$ (entspricht $f_0 \approx 25\text{--}30\,\text{Hz}$) ausgelegt, ergibt sich der erforderliche Kapazitätswert:
-\begin{equation}
-    C_s = \frac{1}{(2\pi f_0)^2 \cdot L_s} = \frac{1}{(2\pi \cdot 25{,}7\,\text{Hz})^2 \cdot 0{,}1166\,\text{H}} \approx 330\,\mu\text{F}
-\end{equation}
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            width=0.85\textwidth,
-            height=6.5cm,
-            xlabel={Fahrgeschwindigkeit $v$ in $\text{km/h}$},
-            ylabel={Abgebbare Wirkleistung $P$ in $\text{W}$},
-            xmin=5, xmax=35,
-            ymin=0, ymax=9,
-            grid=both,
-            grid style={line width=.1pt, draw=gray!20},
-            major grid style={line width=.2pt, draw=gray!50},
-            legend pos=north west,
-            legend cell align={left}
-        ]
-            % Standard Dynamo Kurve (ungefähr asymptotisch gegen 3W)
-            \addplot[thick, blue, domain=5:35, samples=40] {
-                ( (0.602*x)^2 * 12 ) / ( (3.25 + 12)^2 + (2*pi*1.784*x*0.1166)^2 )
-            };
-            \addlegendentry{Konventioneller Betrieb (ohne $C_s$)}
-
-            % Mit Serienkompensation (Peak bei ca. 16-18 km/h, deutlich höher)
-            \addplot[very thick, red!80!black, domain=5:35, samples=50] {
-                ( (0.602*x)^2 * 12 ) / ( (3.25 + 12)^2 + (2*pi*1.784*x*0.1166 - 1/(2*pi*1.784*x*0.000330 + 0.0001))^2 )
-            };
-            \addlegendentry{Mit Serienkompensation ($C_s = 330\,\mu\text{F}$)}
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Vergleich der theoretisch erzielbaren Wirkleistung über der Fahrgeschwindigkeit}
-    \label{fig:leistung_kompensation}
-\end{figure}
-
-Wie der in \autoref{fig:leistung_kompensation} dargestellte Verlauf veranschaulicht, bewirkt die Serienkompensation im alltagsrelevanten Geschwindigkeitsfenster eine mehr als doppelte bis dreifache Wirkleistungsabgabe gegenüber dem Standardbetrieb. Damit bildet $C_s = 330\,\mu\text{F}$ das entscheidende Schaltungselement, um das 10- bis 15-Watt-Ladeziel der Studienarbeit überhaupt erst erreichbar zu machen.
-
-\section{Einordnung und Aufgabenstellung}
-\subsection{Einordnung und Motivation}
-Text für den Unterabschnitt...
-
-\subsection{Bisherige Lösung}
-Text für den Unterabschnitt...
-
-\subsection{Aufgabenstellung}
-Text für den Unterabschnitt...
-
-\section{Methodik und Implementierung}
-\subsection{Mathematische Formeln}
-Formeln lassen sich nummeriert im Text zentrieren:
-\begin{equation}
-    f = p \cdot \frac{v / 3{,}6}{U_{\text{Rad}}} = 14 \cdot \frac{v / 3{,}6}{2{,}18\,\text{m}}
-    \label{eq:frequenz}
-\end{equation}
-Auf Gleichung~\eqref{eq:frequenz} kann im Fließtext direkt verwiesen werden.
-
-\subsection{Einbinden von Abbildungen}
-Bilder bindest du wie folgt ein:
-\begin{figure}[htbp]
-    \centering
-    % \includegraphics[width=0.8\textwidth]{bilder/meine_grafik.png}
-    \rule{0.7\textwidth}{4cm} % Platzhalter, solange noch kein Bild existiert
-    \caption{Beispielhafte Darstellung der Topologie}
-    \label{fig:topologie}
-\end{figure}
-In Abbildung~\ref{fig:topologie} ist der schematische Aufbau dargestellt.
-
-\subsection{Einbinden von Tabellen}
-\begin{table}[htbp]
-    \centering
-    \caption{Bauteilwerte der Eingangsschaltung}
-    \label{tab:bauteile}
-    \begin{tabular}{llr}
-        \toprule
-        \textbf{Bauteil} & \textbf{Funktion} & \textbf{Wert} \\
-        \midrule
-        $R_i$ & Wicklungswiderstand & $2{,}2\,\Omega$ \\
-        $L_i$ & Streuinduktivität & $22\,\text{mH}$ \\
-        $C_s$ & Serienkompensation & $330\,\mu\text{F}$ \\
+        Wicklungswiderstand & $R_i$ & $3{,}2$ & $\Omega$ \\
+        Synchrone Induktivität & $L_s$ & $116{,}7$ & $\text{mH}$ \\
+        Spannungskonstante & $k_v$ & $0{,}59$ & $\text{V}_{\text{RMS}} / (\text{km/h})$ \\
+        Kurzschlussstrom ($15\,\text{km/h}$) & $I_k$ & $453$ & $\text{mA}$ \\
+        Elektrische Frequenz ($15\,\text{km/h}$) & $f_{15}$ & $26$ & $\text{Hz}$ \\
         \bottomrule
     \end{tabular}
 \end{table}

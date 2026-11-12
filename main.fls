@@ -3,7 +3,7 @@ INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/dawg/Dokumente/Studium/SA1/main.tex
+INPUT main.tex
 OUTPUT main.log
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -474,6 +474,7 @@ INPUT ./img/DHBW-Logo.pdf
 INPUT ./img/DHBW-Logo.pdf
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc
+INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr10.tfm
 INPUT ./img/DHBW-Logo.pdf
 INPUT ./img/DHBW-Logo.pdf
 INPUT ./img/DHBW-Logo.pdf
@@ -571,18 +572,6 @@ INPUT ./img/DHBW-Logo.pdf
 INPUT ./img/DHBW-Logo.pdf
 INPUT ./img/DHBW-Logo.pdf
 INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
-INPUT ./img/DHBW-Logo.pdf
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmri12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmcsc10.tfm
 INPUT /usr/share/texmf/tex/latex/lm/t1lmtt.fd
@@ -611,5 +600,4 @@ INPUT /usr/share/texmf/fonts/type1/public/lm/lmr12.pfb
 INPUT /usr/share/texmf/fonts/type1/public/lm/lmr8.pfb
 INPUT /usr/share/texmf/fonts/type1/public/lm/lmri12.pfb
 INPUT /usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb
-INPUT /usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb
 INPUT /usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb
